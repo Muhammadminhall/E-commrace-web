@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+    /> -->
+    <link rel="stylesheet" href="src/style.css" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+  </head>
+  <body>
+    <nav class="bg-white shadow-lg fixed w-full z-10">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="flex justify-between items-center h-16">
+          <!-- Logo -->
+          <span class="text-xl font-bold border-2 py-1.5">
+            <span class="bg-black text-white p-2">E-commerce</span> Store...
+          </span>
+
+          <!-- Desktop Menu -->
+          <div class="hidden md:flex space-x-8 items-center">
+            <a href="#" class="text-gray-700 hover:text-blue-500">Home</a>
+            <a
+              href="/pages/product.html"
+              class="text-gray-700 hover:text-blue-500"
+              >Products</a
+            >
+            <a
+              href="/pages/about.html"
+              class="text-gray-700 hover:text-blue-500"
+              >About</a
+            >
+            <a
+              href="/pages/contact.html"
+              class="text-gray-700 hover:text-blue-500"
+              >Contact</a
+            >
+
+            <!-- Cart Button - FIXED -->
+            <a
+              href="/pages/addToCart.html"
+              class="bg-black text-white px-3 py-1 rounded-xl hover:bg-gray-800 flex items-center justify-center gap-x-2"
+            >
+              <img
+                src="images/icons8-cart-50.png"
+                alt="Cart"
+                class="invert h-4 w-4"
+              />
+              1
+            </a>
+          </div>
+
+          <!-- Mobile Menu Button -->
+          <div class="md:hidden">
+            <button id="menu-btn" class="text-gray-700 focus:outline-none">
+              <!-- Hamburger icon -->
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="2"
+                stroke="currentColor"
+                class="w-6 h-6"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M4 6h16M4 12h16m0 6H4"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div
+        id="mobile-menu"
+        class="hidden md:hidden bg-white border-t border-gray-200"
+      >
+        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+          >Home</a
+        >
+        <a
+          href="/pages/product.html"
+          class="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+          >Products</a
+        >
+        <a
+          href="/pages/about.html"
+          class="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+          >About</a
+        >
+        <a
+          href="pages/contact.html"
+          class="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+          >Contact</a
+        >
+
+        <!-- Cart Button in Mobile Menu -->
+        <a
+          href="/pages/addToCart.html"
+          class="block mx-4 my-2 bg-black text-white px-3 py-1 rounded-xl hover:bg-gray-800 flex items-center justify-center gap-x-2"
+        >
+          <img
+            src="images/icons8-cart-50.png"
+            alt="Cart"
+            class="invert h-4 w-4"
+          />
+          1
+        </a>
+      </div>
+    </nav>
+
+    <!-- the hero section -->
+    <section class="bg-gray-100 py-20">
+      <div class="max-w-6xl mx-auto px-5">
+        <!-- 5 Column Grid -->
+        <div class="grid grid-cols-5 gap-8 items-center">
+          <!-- First Column (Col-span 2) -->
+          <div class="col-span-2">
+            <h1 class="text-lg font-semibold">
+              Explore the Latest in Tech Industries
+            </h1>
+            <h2 class="font-bold text-5xl mt-4 text-gray-800 leading-tight">
+              Your Destination for Cutting-Edge Gadgets!
+            </h2>
+            <p class="mt-6 text-lg text-gray-600">
+              Welcome to
+              <span class="font-semibold text-blue-500">My eComStore</span>,
+              your ultimate destination for cutting-edge gadgets! Explore the
+              latest in tech innovation and style with us. Shop now and discover
+              a world of possibilities!
+            </p>
+            <button
+              class="mt-8 px-6 py-3 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition"
+            >
+              Shop Now
+            </button>
+          </div>
+
+          <!-- Remaining Columns (Image & Extra Space) -->
+          <div class="col-span-3 flex justify-center">
+            <img
+              src="images/section.svg"
+              alt="Tech Gadgets"
+              class="max-w-full h-80 object-contain drop-shadow-lg"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- three card section -->
+
+    <section>
+      <div class="max-w-6xl mx-auto px-5">
+        <!-- Make it 1 column on mobile, 2 on medium screens, 3 on large -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Card 1 -->
+          <div
+            class="flex justify-between items-center p-5 bg-gray-100 rounded-lg"
+          >
+            <!-- Left side -->
+            <div>
+              <h1 class="text-lg font-semibold">New Year Sale</h1>
+              <h1 class="text-xl font-bold mt-2">Get an extra 50% off</h1>
+              <a
+                href="#"
+                class="inline-block mt-4 px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800"
+              >
+                Shop now
+              </a>
+            </div>
+            <!-- Right side -->
+            <div>
+              <img
+                src="images/laptop.png"
+                alt="Laptop"
+                class="max-h-40 w-auto object-contain"
+              />
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div
+            class="flex justify-between items-center p-5 bg-gray-100 rounded-lg"
+          >
+            <div>
+              <h1 class="text-lg font-semibold">New Year Sale</h1>
+              <h1 class="text-xl font-bold mt-2">Get an extra 50% off</h1>
+              <a
+                href="#"
+                class="inline-block mt-4 px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800"
+              >
+                Shop now
+              </a>
+            </div>
+            <div>
+              <img
+                src="images/headphone.png"
+                alt="Headphones"
+                class="max-h-40 w-auto object-contain"
+              />
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div
+            class="flex justify-between items-center p-5 bg-gray-100 rounded-lg"
+          >
+            <div>
+              <h1 class="text-lg font-semibold">New Year Sale</h1>
+              <h1 class="text-xl font-bold mt-2">Get an extra 50% off</h1>
+              <a
+                href="#"
+                class="inline-block mt-4 px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800"
+              >
+                Shop now
+              </a>
+            </div>
+            <div>
+              <img
+                src="images/mobiles.png"
+                alt="Mobiles"
+                class="max-h-40 w-auto object-contain"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- section 4 -->
+    <section class="mt-20">
+      <div class="max-w-6xl mx-auto px-5">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Item 1 -->
+          <div
+            class="flex items-center gap-4 p-4 bg-white rounded-lg shadow hover:shadow-md transition"
+          >
+            <i class="fa-solid fa-truck text-2xl text-blue-500"></i>
+            <div>
+              <h1 class="font-bold">Worldwide Shipping</h1>
+              <p class="text-sm text-gray-500">Order above $100</p>
+            </div>
+          </div>
+
+          <!-- Item 2 -->
+          <div
+            class="flex items-center gap-4 p-4 bg-white rounded-lg shadow hover:shadow-md transition"
+          >
+            <i class="fa-solid fa-arrows-rotate text-2xl text-green-500"></i>
+            <div>
+              <h1 class="font-bold">Easy 30 Day Returns</h1>
+              <p class="text-sm text-gray-500">Back Returns in 7 Days</p>
+            </div>
+          </div>
+
+          <!-- Item 3 -->
+          <div
+            class="flex items-center gap-4 p-4 bg-white rounded-lg shadow hover:shadow-md transition"
+          >
+            <i
+              class="fa-solid fa-hand-holding-dollar text-2xl text-yellow-500"
+            ></i>
+            <div>
+              <h1 class="font-bold">Secure Payment</h1>
+              <p class="text-sm text-gray-500">Safe & Reliable</p>
+            </div>
+          </div>
+
+          <!-- Item 4 -->
+          <div
+            class="flex items-center gap-4 p-4 bg-white rounded-lg shadow hover:shadow-md transition"
+          >
+            <i class="fa-solid fa-headset text-2xl text-purple-500"></i>
+            <div>
+              <h1 class="font-bold">24/7 Support</h1>
+              <p class="text-sm text-gray-500">We're here to help</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- card section  -->
+    <template>
+      <div class="product-card">
+        <span class="category"></span>
+        <img src="" alt="Product Image" class="product-image" />
+
+        <h1 class="title"></h1>
+        <p class="description"></p>
+        <p class="price"></p>
+        <p class="rating"></p>
+
+        <div class="flex items-center gap-4">
+          <p class="font-medium">Quantity (Pieces)</p>
+          <div class="flex items-center border rounded">
+            <button class="px-2 py-1 font-bold increment">+</button>
+            <p class="px-3">1</p>
+            <button class="px-2 py-1 font-bold decrement">-</button>
+          </div>
+          <button
+            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cart"
+          >
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    </template>
+
+    <section class="max-w-6xl mx-auto px-5 mt-20">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <!-- Left Text -->
+        <div class="text-center md:text-left md:flex-1">
+          <div class="my-20">
+            <h2 class="text-2xl font-semibold text-end">1.Wide Selection</h2>
+            <p class="mt-2 text-gray-600 text-justify">
+              My stores offers a diverse range of gadgets, from smartphones to
+              smart home devices, ensuring you find what you need to elevate
+              your lifestyle and meet your tech requirements.
+            </p>
+          </div>
+          <div class="my-20">
+            <h2 class="text-2xl font-semibold text-end">2.Quality Assurance</h2>
+            <p class="mt-2 text-gray-600 text-justify">
+              Every gadget at Thapa Store undergoes rigorous quality checks,
+              guaranteeing reliability and performance, so you can shop with
+              confidence knowing you're getting the best.
+            </p>
+          </div>
+          <div class="my-20">
+            <h2 class="text-2xl font-semibold text-end">
+              3.Competitive Prices
+            </h2>
+            <p class="mt-2 text-gray-600 text-justify">
+              Enjoy great value with Thapa Store's competitive prices on
+              high-quality gadgets, making top-of-the-line technology accessible
+              to all without compromising on quality or performance.
+            </p>
+          </div>
+        </div>
+
+        <!-- Center Image -->
+        <div class="flex justify-center md:mx-8">
+          <img
+            src="images/boy.png"
+            alt="Descriptive alt text"
+            class="max-h-100 w-auto object-contain"
+          />
+        </div>
+
+        <!-- Right Text -->
+        <div class="text-center md:text-right md:flex-1">
+          <div class="my-20">
+            <h2 class="text-2xl font-semibold text-end">4.Expert Guidance</h2>
+            <p class="mt-2 text-gray-600 text-justify">
+              Our knowledgeable staff provides expert guidance, helping you
+              choose the right gadget to meet your needs and preferences,
+              ensuring you make informed decisions every step of the way.
+            </p>
+          </div>
+          <div class="my-20">
+            <h2 class="text-2xl font-semibold text-end">
+              5.Convenient Shopping
+            </h2>
+            <p class="mt-2 text-gray-600 text-justify">
+              With Thapa Store, shopping for gadgets is easy and convenient. Our
+              user-friendly website and secure payment options ensure a seamless
+              experience from browsing to checkout, all from the comfort of your
+              home.
+            </p>
+          </div>
+          <div class="my-20">
+            <h2 class="text-2xl font-semibold text-end">6.Excellent Service</h2>
+            <p class="mt-2 text-gray-600 text-justify">
+              Thapa Store is committed to providing excellent service to our
+              customers. From prompt assistance with inquiries to efficient
+              handling of orders and deliveries, we prioritize your satisfaction
+              every step of the way.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="bg-gray-900 text-white py-10">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
+          <!-- Column 1 (spans 2 columns on large screens only) -->
+          <div class="lg:col-span-2">
+            <span
+              class="inline-block text-xl font-bold border border-gray-300 rounded-lg overflow-hidden shadow-sm"
+            >
+              <span
+                class="bg-gradient-to-r from-indigo-600 to-blue-500 text-white px-3 py-2 inline-block"
+              >
+                E-commerce
+              </span>
+              <span class="px-3 py-2 text-gray-300">Store...</span>
+            </span>
+            <p class="mt-3 text-gray-400 leading-relaxed">
+              My store offers a diverse range of gadgets, from smartphones to
+              smart home devices, ensuring you find what you need to elevate
+              your lifestyle and meet your tech requirements.
+            </p>
+          </div>
+
+          <!-- Column 2 -->
+          <div>
+            <h3 class="text-lg font-semibold mb-3">Products</h3>
+            <ul class="space-y-2 text-gray-400">
+              <li><a href="#" class="hover:text-white">Smartphones</a></li>
+              <li><a href="#" class="hover:text-white">Smart Home</a></li>
+              <li><a href="#" class="hover:text-white">Wearables</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 3 -->
+          <div>
+            <h3 class="text-lg font-semibold mb-3">Support</h3>
+            <ul class="space-y-2 text-gray-400">
+              <li><a href="#" class="hover:text-white">Help Center</a></li>
+              <li><a href="#" class="hover:text-white">Returns</a></li>
+              <li><a href="#" class="hover:text-white">Contact Us</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 4 -->
+          <div>
+            <h3 class="text-lg font-semibold mb-3">Company</h3>
+            <ul class="space-y-2 text-gray-400">
+              <li><a href="#" class="hover:text-white">About</a></li>
+              <li><a href="#" class="hover:text-white">Careers</a></li>
+              <li><a href="#" class="hover:text-white">Press</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Bottom footer -->
+        <div
+          class="border-t border-gray-800 mt-10 pt-6 text-center text-gray-500 text-sm"
+        >
+          &copy; 2025 Your Brand. All rights reserved.
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
