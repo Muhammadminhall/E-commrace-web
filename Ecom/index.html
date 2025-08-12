@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite App</title>
   </head>
-  <body>
+  <body class="homepage">
     <nav class="bg-white shadow-lg fixed w-full z-10">
       <div class="max-w-7xl mx-auto px-4">
         <div class="flex justify-between items-center h-16">
@@ -289,7 +289,8 @@
 
     <template id="product-template">
       <div
-        class="productCard max-w-sm bg-white rounded-lg shadow-md p-6 flex flex-col gap-4"
+        id="productCard"
+        class="w-full sm:max-w-sm bg-white rounded-lg shadow-md p-6 flex flex-col gap-4 mx-auto"
       >
         <span
           class="category text-sm text-gray-500 uppercase tracking-wide"
@@ -303,10 +304,13 @@
         <p class="description text-gray-700 text-sm"></p>
 
         <p class="price text-lg font-bold text-blue-600"></p>
-        <p class="rating text-yellow-500"></p>
+        <p class="rating"></p>
+        <p class="text-sm text-gray-600">
+          Stock: <span class="stock-count font-medium"></span> available
+        </p>
         <div class="flex items-center gap-4 mt-auto">
           <p class="font-medium">Quantity (Pieces)</p>
-          <div class="flex items-center border rounded">
+          <div class="stock flex items-center border rounded">
             <button
               class="px-3 py-1 font-bold increment hover:bg-gray-200 transition"
             >
@@ -320,7 +324,7 @@
             </button>
           </div>
           <button
-            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+            class="addCart bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
           >
             Cart
           </button>
@@ -336,11 +340,12 @@
       ></div>
       <!-- Responsive button container -->
       <div class="flex justify-center">
-        <button
+        <a
+          href="/pages/product.html"
           class="w-full max-w-xs sm:max-w-sm md:w-auto px-6 py-3 rounded-md bg-indigo-600 text-white hover:bg-indigo-700 transition-colors font-medium text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
         >
           View more
-        </button>
+        </a>
       </div>
     </section>
 

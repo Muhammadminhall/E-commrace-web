@@ -1,50 +1,39 @@
-import data from "../api/data.json";
-const quantity = document.querySelector(".quantity");
-// const productContainer = document.querySelector(".productContainer");
-// const template = document.querySelector("#product-template");
+import { addToCart } from "./addToCart";
+import { quantityToggle } from "./quantityToggle";
 
-console.log(data);
-const productContainer = document.querySelector(".productContainer");
-const template = document.querySelector("#product-template");
-
-const showProduct = async () => {
+export async function showAllProducts() {
   const response = await fetch("../api/data.json");
   const data = await response.json();
 
-  data.forEach((item) => {
-    const clone = template.content.cloneNode(true);
+  const productContainer = document.querySelector(".productContainer");
+  const template = document.querySelector("#product-template");
 
-    clone.querySelector(".title").textContent = item.title;
-    clone.querySelector(".product-image").src = item.image;
-    clone.querySelector(".product-image").alt = item.title;
-    clone.querySelector(".description").textContent = item.description || "";
-    clone.querySelector(".price").textContent = item.price
-      ? `$${item.price}`
-      : "";
-    clone.querySelector(".rating").textContent = item.rating
-      ? `Rating: ${item.rating}`
-      : "";
-    clone.querySelector(".category").textContent = item.category || "";
+  data.forEach((product) => {
+    // Hello
+    const { id, title, price, description, category, image, rating, stock } =
+      product;
+    const clone = template.content.cloneNode(true);
+    clone.querySelector("#productCard").setAttribute("id", `card${id}`);
+
+    clone.querySelector(".title").textContent = product.title;
+    clone.querySelector(".category").textContent = product.category;
+    clone.querySelector(".productImage").src = product.image;
+    clone.querySelector(".productImage").alt = product.name;
+    clone.querySelector(".stock-count").textContent = product.stock;
+    clone.querySelector(".price").textContent = `RS ${product.price}`;
+    clone.querySelector(".description").textContent = product.description;
+    clone.querySelector(
+      ".rating"
+    ).textContent = `rating: ${product.rating.rate}`;
+
+    clone
+      .querySelector(".stock")
+      .addEventListener("click", (event) => quantityToggle(event, id, stock));
+
+    clone.querySelector(".addCart").addEventListener("click", (event) => {
+      addToCart(event, id, product.stock);
+    });
 
     productContainer.appendChild(clone);
-
-    // Get the buttons & quantity inside the current clone
-    const currentCard = productContainer.lastElementChild;
-    const incrementBtn = currentCard.querySelector(".increment");
-    const decrementBtn = currentCard.querySelector(".decrement");
-    const quantityElem = currentCard.querySelector(".quantity");
-
-    incrementBtn.addEventListener("click", () => {
-      let qty = parseInt(quantityElem.textContent);
-      quantityElem.textContent = qty + 1;
-    });
-
-    decrementBtn.addEventListener("click", () => {
-      let qty = parseInt(quantityElem.textContent);
-      if (qty > 0) {
-        quantityElem.textContent = qty - 1;
-      }
-    });
   });
-};
-showProduct();
+}

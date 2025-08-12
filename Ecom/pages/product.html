@@ -3,10 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="/src/style.css" />
+    <link rel="icon" type="image/svg+xml" href="/images/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Products - E-commerce Store</title>
   </head>
-  <body>
+  <body class="productpage">
     <nav class="bg-white shadow-lg fixed w-full z-10">
       <div class="max-w-7xl mx-auto px-4">
         <div class="flex justify-between items-center h-16">
@@ -116,7 +117,8 @@
 
     <template id="product-template">
       <div
-        class="productCard max-w-sm bg-white rounded-lg shadow-md p-6 flex flex-col gap-4"
+        id="productCard"
+        class="w-full sm:max-w-sm bg-white rounded-lg shadow-md p-6 flex flex-col gap-4 mx-auto"
       >
         <span
           class="category text-sm text-gray-500 uppercase tracking-wide"
@@ -124,29 +126,33 @@
         <img
           src=""
           alt="Product Image"
-          class="product-image mx-auto h-48 object-contain"
+          class="productImage mx-auto h-48 object-contain"
         />
         <h1 class="title text-xl font-semibold text-gray-900"></h1>
         <p class="description text-gray-700 text-sm"></p>
+
         <p class="price text-lg font-bold text-blue-600"></p>
-        <p class="rating text-yellow-500"></p>
+        <p class="rating"></p>
+        <p class="text-sm text-gray-600">
+          Stock: <span class="stock-count font-medium"></span> available
+        </p>
         <div class="flex items-center gap-4 mt-auto">
           <p class="font-medium">Quantity (Pieces)</p>
-          <div class="quantity-container flex items-center border rounded">
+          <div class="stock flex items-center border rounded">
             <button
-              class="decrement px-3 py-1 font-bold hover:bg-gray-200 transition"
-            >
-              -
-            </button>
-            <p class="quantity px-4">1</p>
-            <button
-              class="increment px-3 py-1 font-bold hover:bg-gray-200 transition"
+              class="px-3 py-1 font-bold increment hover:bg-gray-200 transition"
             >
               +
             </button>
+            <p class="px-4 quantity">1</p>
+            <button
+              class="px-3 py-1 font-bold decrement hover:bg-gray-200 transition"
+            >
+              -
+            </button>
           </div>
           <button
-            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+            class="addCart bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
           >
             Cart
           </button>
@@ -161,6 +167,6 @@
       <div class="flex justify-center mt-8"></div>
     </section>
 
-    <script type="module" src="/src/products.js"></script>
+    <script type="module" src="/src/main.js"></script>
   </body>
 </html>
