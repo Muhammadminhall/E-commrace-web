@@ -1,8 +1,8 @@
 import products from "../api/data.json";
 
-// ✅ LocalStorage helpers
+// ----- LocalStorage Helpers -----
 const localStorageProduct = () => {
-  let cartProduct = localStorage.getItem("localCartProduct");
+  const cartProduct = localStorage.getItem("localCartProduct");
   return cartProduct ? JSON.parse(cartProduct) : [];
 };
 
@@ -13,13 +13,13 @@ const saveToLocalStorage = (cartProducts) => {
 document.addEventListener("DOMContentLoaded", () => {
   let cartProducts = localStorageProduct();
 
-  // Add status to cart items
+  // ----- Map cart items with product data -----
   let cartItems = cartProducts.map((cartItem) => {
-    const prod = products.find((p) => p.id === cartItem.id);
+    const prod = products.find((p) => String(p.id) === String(cartItem.id));
     return {
       ...prod,
       quantity: Number(cartItem.quantity) || 1,
-      status: cartItem.status || "pending", // pending by default
+      status: cartItem.status || "pending", // default to pending
     };
   });
 
@@ -27,10 +27,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const template = document.querySelector(".cartTemplate");
   if (!container || !template) return;
 
+  // ----- Show Cart Items -----
   function showCartProduct() {
     container.innerHTML = "";
     cartItems.forEach((item) => {
       const clone = template.content.cloneNode(true);
+
       clone.querySelector(".product-img").src = item.image;
       clone.querySelector(".category").textContent = item.category;
       clone.querySelector(".title").textContent = item.title;
@@ -39,48 +41,57 @@ document.addEventListener("DOMContentLoaded", () => {
         item.price * item.quantity
       ).toFixed(2)}`;
 
-      // Show status
+      // Status message
       const statusElem = document.createElement("p");
       statusElem.className = "text-sm font-medium mt-1";
       if (item.status === "processing") {
         statusElem.textContent = "Processing / Delivery in progress...";
-        statusElem.className += " text-yellow-600";
+        statusElem.classList.add("text-yellow-600");
       } else if (item.status === "paid") {
         statusElem.textContent = "Payment Completed!";
-        statusElem.className += " text-green-600";
+        statusElem.classList.add("text-green-600");
       }
       clone.querySelector(".flex-grow").appendChild(statusElem);
 
-      // Disable increment/decrement/remove if processing
-      if (item.status !== "processing") {
-        clone.querySelector(".increment").addEventListener("click", () => {
+      // Buttons
+      const incBtn = clone.querySelector(".increment");
+      const decBtn = clone.querySelector(".decrement");
+      const removeBtn = clone.querySelector(".remove-btn");
+
+      if (item.status === "pending") {
+        // Enable buttons for pending items
+        incBtn.addEventListener("click", () => {
           item.quantity++;
           saveCart();
           showCartProduct();
         });
-        clone.querySelector(".decrement").addEventListener("click", () => {
+        decBtn.addEventListener("click", () => {
           if (item.quantity > 1) {
             item.quantity--;
             saveCart();
             showCartProduct();
           }
         });
-        clone.querySelector(".remove-btn").addEventListener("click", () => {
-          cartItems = cartItems.filter((i) => i.id !== item.id);
+        removeBtn.addEventListener("click", () => {
+          cartItems = cartItems.filter((i) => String(i.id) !== String(item.id));
           saveCart();
           showCartProduct();
         });
       } else {
-        clone.querySelector(".increment").disabled = true;
-        clone.querySelector(".decrement").disabled = true;
-        clone.querySelector(".remove-btn").disabled = true;
+        // Disable buttons for non-editable items
+        [incBtn, decBtn, removeBtn].forEach((btn) => {
+          btn.disabled = true;
+          btn.classList.add("opacity-50", "cursor-not-allowed");
+        });
       }
 
       container.appendChild(clone);
     });
+
     updateOrderSummary();
   }
 
+  // ----- Save Cart to LocalStorage -----
   function saveCart() {
     const simpleCart = cartItems.map((i) => ({
       id: i.id,
@@ -90,24 +101,27 @@ document.addEventListener("DOMContentLoaded", () => {
     saveToLocalStorage(simpleCart);
   }
 
+  // ----- Update Order Summary -----
   function updateOrderSummary() {
     const subtotalElem = document.getElementById("subtotalAmount");
     const shippingElem = document.getElementById("shippingAmount");
     const totalElem = document.getElementById("totalAmount");
 
-    let subtotal = cartItems.reduce(
+    // Only pending items count
+    const pendingItems = cartItems.filter((i) => i.status === "pending");
+    const subtotal = pendingItems.reduce(
       (acc, item) => acc + item.price * item.quantity,
       0
     );
-    let shipping = cartItems.length ? 5 : 0;
-    let total = subtotal + shipping;
+    const shipping = pendingItems.length ? 5 : 0;
+    const total = subtotal + shipping;
 
     if (subtotalElem) subtotalElem.textContent = `$${subtotal.toFixed(2)}`;
     if (shippingElem) shippingElem.textContent = `$${shipping.toFixed(2)}`;
     if (totalElem) totalElem.textContent = `$${total.toFixed(2)}`;
   }
 
-  // ----- Payment Modal Logic -----
+  // ----- Payment Modal -----
   const checkoutBtn = document.getElementById("checkoutBtn");
   const paymentModal = document.getElementById("paymentModal");
   const paymentTypeSelect = document.getElementById("paymentType");
@@ -121,24 +135,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const confirmPaymentBtn = document.getElementById("confirmPayment");
 
   checkoutBtn?.addEventListener("click", () => {
-    if (cartItems.length === 0) {
-      alert("🛒 Cart is empty!");
-      return;
+    const pendingItems = cartItems.filter((i) => i.status === "pending");
+    if (pendingItems.length === 0) {
+      return alert("🛒 No pending items to pay!");
     }
 
-    const subtotal = cartItems.reduce(
+    const subtotal = pendingItems.reduce(
       (acc, item) => acc + item.price * item.quantity,
       0
     );
-    const shipping = cartItems.length ? 5 : 0;
+    const shipping = pendingItems.length ? 5 : 0;
     cardAmountInput.value = (subtotal + shipping).toFixed(2);
-
-    // Disable card fields if any item is processing
-    const anyProcessing = cartItems.some((i) => i.status === "processing");
-    cardNumberInput.disabled = anyProcessing;
-    cardExpiryInput.disabled = anyProcessing;
-    cardCVVInput.disabled = anyProcessing;
-    confirmPaymentBtn.disabled = anyProcessing;
 
     paymentModal.classList.remove("hidden");
   });
@@ -160,66 +167,42 @@ document.addEventListener("DOMContentLoaded", () => {
     const expiry = cardExpiryInput.value.trim();
     const cvv = cardCVVInput.value.trim();
 
-    // --- Basic validation ---
-    if (!cardNumber || !expiry || !cvv) {
-      alert("❌ Please fill all card fields!");
-      return;
-    }
-    if (!/^\d{16}$/.test(cardNumber)) {
-      alert("❌ Card number must be 16 digits!");
-      return;
-    }
-    if (!/^\d{3,4}$/.test(cvv)) {
-      alert("❌ CVV must be 3 or 4 digits!");
-      return;
-    }
-    if (!/^\d{2}\/\d{2}$/.test(expiry)) {
-      alert("❌ Expiry must be in MM/YY format!");
-      return;
-    }
-    if (type === "personal") {
-      const name = personalNameInput.value.trim();
-      if (!name) {
-        alert("❌ Please enter your name for personal payment!");
-        return;
-      }
-    }
+    // ----- Validation -----
+    if (!cardNumber || !expiry || !cvv)
+      return alert("❌ Fill all card fields!");
+    if (!/^\d{16}$/.test(cardNumber))
+      return alert("❌ Card number must be 16 digits!");
+    if (!/^\d{3,4}$/.test(cvv)) return alert("❌ CVV must be 3 or 4 digits!");
+    if (!/^\d{2}\/\d{2}$/.test(expiry))
+      return alert("❌ Expiry must be MM/YY!");
+    if (type === "personal" && !personalNameInput.value.trim())
+      return alert("❌ Enter name for personal payment!");
 
-    // --- Simulate processing ---
+    // ----- Processing Simulation -----
     confirmPaymentBtn.textContent = "Processing...";
     confirmPaymentBtn.disabled = true;
 
     setTimeout(() => {
-      // Mark all items as processing
-      cartItems = cartItems.map((item) => ({ ...item, status: "processing" }));
+      // Mark pending items as paid
+      cartItems = cartItems.map((i) =>
+        i.status === "pending" ? { ...i, status: "paid" } : i
+      );
       saveCart();
       showCartProduct();
 
-      if (type === "personal") {
-        alert(
-          `✅ Personal Payment received from ${personalNameInput.value}! Amount: $${cardAmountInput.value}`
-        );
-      } else {
-        alert(`✅ Dummy Payment Successful for $${cardAmountInput.value}!`);
-      }
+      alert(`✅ Payment Successful! Amount: $${cardAmountInput.value}`);
 
-      // Disable card fields after payment
-      cardNumberInput.disabled = true;
-      cardExpiryInput.disabled = true;
-      cardCVVInput.disabled = true;
-      confirmPaymentBtn.disabled = true;
-
-      // Reset modal (keep it visible if you want)
+      // Reset modal
       paymentModal.classList.add("hidden");
-
-      // Reset fields visually
       cardNumberInput.value = "";
       cardExpiryInput.value = "";
       cardCVVInput.value = "";
       personalNameInput.value = "";
       confirmPaymentBtn.textContent = "Confirm Payment";
+      confirmPaymentBtn.disabled = false;
     }, 2000);
   });
 
+  // ----- Initial render -----
   showCartProduct();
 });
