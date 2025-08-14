@@ -21,6 +21,6 @@ export const quantityToggle = (event, id, stock) => {
   }
   productQuantity.innerText = quantity;
   productQuantity.setAttribute("dataQuantity", quantity);
-  console.log(quantity);
+  // console.log(quantity);
   return quantity;
 };

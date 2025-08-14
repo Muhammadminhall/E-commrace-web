@@ -1,20 +1,15 @@
-const submit = document
-  .querySelector("#submit")
-  .addEventListener("click", () => {
-    check();
-  });
-// const form = document.querySelector("#form");
-const firstName = document.querySelector("#firstName").value.trim();
-const lastName = document.querySelector("#lastName").value.trim();
-const email = document.querySelector("#email").value.trim();
-const phone = document.querySelector("#phone").value.trim();
-const message = document.querySelector("#message").value.trim();
-
 const check = () => {
+  const firstName = document.getElementById("firstName").value.trim();
+  const lastName = document.getElementById("lastName").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const message = document.getElementById("message").value.trim();
+
   if (!firstName || !lastName || !email || !phone || !message) {
-    alert("please enter the details");
+    alert("Please enter all the details");
     return false;
   } else {
     alert("Your form is submitted");
+    return true;
   }
 };

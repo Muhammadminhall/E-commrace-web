@@ -22,7 +22,7 @@ const showProduct = async () => {
   const productContainer = document.querySelector(".productContainer");
   const template = document.querySelector("#product-template");
 
-  console.log(data);
+  // console.log(data);
 
   data.slice(0, 3).forEach((product) => {
     // Hello
